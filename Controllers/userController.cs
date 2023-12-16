@@ -8,7 +8,6 @@ namespace User_Service.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserContext _context;
-
         public UserController(UserContext context)
         {
             _context = context;
@@ -21,11 +20,9 @@ namespace User_Service.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(User user)
+        public async Task<string> RegisterUser(UserDTO userDTO)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-            return Ok(user);
+            return $"successfully registered {userDTO.Email}";
         }
 
         [HttpPost]
