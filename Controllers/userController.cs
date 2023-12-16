@@ -20,13 +20,13 @@ namespace User_Service.Controllers
         }
 
         [HttpPost]
-        public async Task<string> RegisterUser(UserDTO userDTO)
+        public async Task<string> RegisterUser(UserRegisterDTO userDTO)
         {
             return $"successfully registered {userDTO.Email}";
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(UserDTO userDTO)
+        public async Task<IActionResult> Login(UserLoginDTO userDTO)
         {
             return Ok(userDTO);
         }

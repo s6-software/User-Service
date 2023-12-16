@@ -7,12 +7,12 @@ namespace API.Services
 {
     public interface IAuthenticationService
     {
-        Task<string> RegisterAsync(UserDTO userDTO);
+        Task<string> RegisterAsync(UserRegisterDTO userDTO);
     }
 
     public class AuthenticationService : IAuthenticationService
     {
-        public async Task<string> RegisterAsync(UserDTO userDTO)
+        public async Task<string> RegisterAsync(UserRegisterDTO userDTO)
         {
             var userArgs = new UserRecordArgs
             {
