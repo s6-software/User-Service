@@ -4,10 +4,10 @@ namespace User_Service.Models
 {
     public class UserContext : DbContext
     {
-        
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public UserContext(DbContextOptions<UserContext> options) : base(options)
         {
-            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         }
+
+        public DbSet<User> Users { get; set; }
     }
 }
