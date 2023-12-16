@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text.Json.Serialization;
 using User_Service.Models;
 
-namespace API.Services
+namespace User_Service.Services
 {
     public interface IAuthenticationService
     {
