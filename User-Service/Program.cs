@@ -44,7 +44,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //
 
-
 var app = builder.Build();
 
 // auto-apply migrations
