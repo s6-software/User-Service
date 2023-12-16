@@ -19,8 +19,7 @@ namespace User_Service.Controllers
             _jwtProvider = jwtProvider;
         }
 
-        [HttpPost]
-        [Route("/register")]
+        [HttpPost("register")]
         public async Task<string> RegisterUser(UserRegisterDTO userDTO)
         {
             if (_userService.ValidateRegistration(userDTO) == false)
@@ -35,8 +34,7 @@ namespace User_Service.Controllers
             return $"successfully registered {userDTO.Email}";
         }
 
-        [HttpPost]
-        [Route("/login")]
+        [HttpPost("login")]
         public async Task<string> Login(UserLoginDTO userDTO)
         {
             string token = await _jwtProvider.Login(userDTO);
