@@ -1,5 +1,0 @@
-{
-    "ConnectionStrings": {
-        "Default": "Server=db-mysql-ams3-05568-do-user-15377062-0.c.db.ondigitalocean.com; User=doadmin; Password=AVNS_QpYURJH_f9B0uhX_Hbt; Database=defaultdb; port=25060"
-    }
-}
