@@ -7,14 +7,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 //env
 var dbConfig = new ConfigurationBuilder()
-    .AddJsonFile(builder.Configuration["DATABASE_CONNECTION"], optional: false, reloadOnChange: true)
+    .AddJsonFile(builder.Configuration["DATABASE_CONNECTION"]!, optional: false, reloadOnChange: true)
     .Build();
 string db_connection = dbConfig.GetConnectionString("Default")!;
 
 var googleApisConfig = new ConfigurationBuilder()
-    .AddJsonFile(builder.Configuration["GOOGLE_APIS_JWT"], optional: false, reloadOnChange: true)
+    .AddJsonFile(builder.Configuration["GOOGLE_APIS_JWT"]!, optional: false, reloadOnChange: true)
     .Build();
 string googleApisJwtPath = googleApisConfig["GOOGLE_APIS_JWT"]!;
+
 
 // connect to db
 builder.Services.AddDbContext<UserContext>(options =>
@@ -34,6 +35,7 @@ builder.Services.AddHttpClient<IJwtProvider, JwtProvider>((sp, httpClient) =>
     var config = sp.GetRequiredService<IConfiguration>();
     httpClient.BaseAddress = new Uri(googleApisJwtPath);
 });
+//
 
 
 // add controlleres
