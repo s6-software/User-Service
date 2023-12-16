@@ -1,0 +1,65 @@
+name: .NET
+
+on:
+  push:
+    branches:
+      - development
+      - staging
+      - production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '7.x'
+
+      - name: Build API
+        run: dotnet build ./API/API.csproj --configuration Release
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '7.x' 
+
+      - name: Restore Test Dependencies
+        run: dotnet restore ./Test/Test.csproj
+
+      - name: Build Test Project
+        run: dotnet build ./Test/Test.csproj --configuration Release
+
+      - name: Test
+        run: dotnet test ./Test/Test.csproj --configuration Release
+
+  docker-push:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/staging' || github.ref == 'refs/heads/production')
+
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.ORG_DOCKERHUB_USERNAME }} -p ${{ secrets.ORG_DOCKERHUB_TOKEN }}
+
+      - name: Build the Docker image
+        run: docker build -t ${{ secrets.ORG_DOCKERHUB_USERNAME }}/user-service:latest ./API
+
+      - name: Push the Docker image to Docker Hub
+        run: docker push ${{ secrets.ORG_DOCKERHUB_USERNAME }}/user-service:latest
