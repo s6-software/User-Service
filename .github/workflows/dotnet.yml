@@ -3,9 +3,9 @@ name: .NET
 on:
   push:
     branches:
-      - development
+      - dev
       - staging
-      - production
+      - master
 
 jobs:
   build:

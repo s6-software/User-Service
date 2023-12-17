@@ -11,6 +11,14 @@
         public required string Password { get; set; }
         public required string Email { get; set; }
     }
+
+    public class LoggedUser
+    {
+        public string? Name { get; set; }
+        public required string Email { get; set; }
+        public required string Token { get; set; }
+    }
+
     public class UserRegisterDTO
     {
         public required string Email { get; set; }
