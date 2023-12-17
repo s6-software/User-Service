@@ -1,4 +1,5 @@
 ﻿using FirebaseAdmin.Auth;
+using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
 using System.Text.Json.Serialization;
 using User_Service.Models;
@@ -7,18 +8,20 @@ namespace User_Service.Services
 {
     public interface IJwtProvider
     {
-        Task<string> Login(UserLoginDTO userDTO);
+        Task<LoggedUser> Login(UserLoginDTO userDTO);
     }
 
     public class JwtProvider : IJwtProvider
     {
         private readonly HttpClient _httpClient;
+        private readonly UserContext _userContext;
 
-        public JwtProvider(HttpClient httpClient)
+        public JwtProvider(HttpClient httpClient, UserContext userContext)
         {
             _httpClient = httpClient;
+            _userContext = userContext;
         }
-        public async Task<string> Login(UserLoginDTO userDTO)
+        public async Task<LoggedUser> Login(UserLoginDTO userDTO)
         {
             var request = new
             {
@@ -30,7 +33,14 @@ namespace User_Service.Services
 
             var authToken = await response.Content.ReadFromJsonAsync<AuthToken>();
 
-            return authToken.IdToken;
+            var user = await _userContext.Users.FirstOrDefaultAsync(x => x.Email == userDTO.Email);
+
+            return new LoggedUser
+            {
+                Email = userDTO.Email,
+                Token = authToken!.IdToken,
+                Name = user!.Name
+            };
         }
 
         public class AuthToken
