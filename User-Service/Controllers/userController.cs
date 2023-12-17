@@ -47,6 +47,7 @@ namespace User_Service.Controllers
         {
             LoggedUser Logged = await _jwtProvider.Login(userDTO);
 
+
             return Logged;
         }
 
