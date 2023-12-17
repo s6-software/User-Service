@@ -27,19 +27,27 @@ namespace User_Service.Controllers
                 return "invalid input";
             }
 
-            string Uid = await _authentication.RegisterAsync(userDTO);
+            try
+            {
+                string Uid = await _authentication.RegisterAsync(userDTO);
+                _userService.RegisterUser(userDTO, Uid);
 
-            _userService.RegisterUser(userDTO, Uid);
+                return $"successfully registered {userDTO.Email}";
+            }
+            catch (Exception ex)
+            {
+                return $"error registering user: {ex.Message}";
+            }
 
-            return $"successfully registered {userDTO.Email}";
+
         }
 
         [HttpPost("login")]
-        public async Task<string> Login(UserLoginDTO userDTO)
+        public async Task<LoggedUser> Login(UserLoginDTO userDTO)
         {
-            string token = await _jwtProvider.Login(userDTO);
+            LoggedUser Logged = await _jwtProvider.Login(userDTO);
 
-            return token;
+            return Logged;
         }
 
     }

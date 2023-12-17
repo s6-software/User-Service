@@ -7,7 +7,7 @@ namespace User_Service.Services
 {
     public interface IJwtProvider
     {
-        Task<string> Login(UserLoginDTO userDTO);
+        Task<LoggedUser> Login(UserLoginDTO userDTO);
     }
 
     public class JwtProvider : IJwtProvider
@@ -18,7 +18,7 @@ namespace User_Service.Services
         {
             _httpClient = httpClient;
         }
-        public async Task<string> Login(UserLoginDTO userDTO)
+        public async Task<LoggedUser> Login(UserLoginDTO userDTO)
         {
             var request = new
             {
@@ -30,7 +30,11 @@ namespace User_Service.Services
 
             var authToken = await response.Content.ReadFromJsonAsync<AuthToken>();
 
-            return authToken.IdToken;
+            return new LoggedUser
+            {
+                Email = userDTO.Email,
+                Token = authToken!.IdToken
+            };
         }
 
         public class AuthToken
