@@ -45,10 +45,17 @@ namespace User_Service.Controllers
         [HttpPost("login")]
         public async Task<LoggedUser> Login(UserLoginDTO userDTO)
         {
-            LoggedUser Logged = await _jwtProvider.Login(userDTO);
 
+            try
+            {
+                LoggedUser Logged = await _jwtProvider.Login(userDTO);
+                return Logged;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
-            return Logged;
         }
 
     }
