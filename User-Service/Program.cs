@@ -4,6 +4,18 @@ using User_Service.Models;
 using User_Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+//cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost3000",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 
 //env
 var dbConfig = new ConfigurationBuilder()
@@ -45,6 +57,7 @@ builder.Services.AddSwaggerGen();
 //
 
 var app = builder.Build();
+app.UseCors("AllowLocalhost3000");
 
 // auto-apply migrations
 using (var scope = app.Services.CreateScope())

@@ -33,8 +33,18 @@ namespace User_Service.Services
 
             var authToken = await response.Content.ReadFromJsonAsync<AuthToken>();
 
+            if (authToken.IdToken == null)
+            {
+                throw new Exception("user not in database");
+            }
+
             var user = await _userContext.Users.FirstOrDefaultAsync(x => x.Email == userDTO.Email);
 
+
+            if (user == null)
+            {
+                throw new Exception("user not in database");
+            }
             return new LoggedUser
             {
                 Email = userDTO.Email,
