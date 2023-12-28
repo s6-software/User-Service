@@ -47,6 +47,7 @@ namespace User_Service.Services
             }
             return new LoggedUser
             {
+                Id = user.Id,
                 Email = userDTO.Email,
                 Token = authToken!.IdToken,
                 Name = user!.Name
