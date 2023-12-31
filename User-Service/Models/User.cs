@@ -1,8 +1,11 @@
-﻿namespace User_Service.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace User_Service.Models
 {
     public class User
     {
-        public int Id { get; set; }
+        [Key]
+        public required string UID { get; set; }
         public required string Name { get; set; }
         public required string Email { get; set; }
         }
@@ -14,7 +17,7 @@
 
     public class LoggedUser
     {
-        public int Id { get; set; }
+        public string Uid { get; set; }
         public string? Name { get; set; }
         public required string Email { get; set; }
         public required string Token { get; set; }

@@ -22,6 +22,7 @@ namespace User_Service.Services
         {
             var newUser = new User
             {
+                UID = uid,
                 Name = registerDTO.Name,
                 Email = registerDTO.Email,
             };
