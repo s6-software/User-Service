@@ -5,10 +5,11 @@ namespace User_Service.Models
     public class User
     {
         [Key]
+        [Required]
         public required string UID { get; set; }
         public required string Name { get; set; }
         public required string Email { get; set; }
-        }
+    }
     public class UserLoginDTO
     {
         public required string Password { get; set; }
