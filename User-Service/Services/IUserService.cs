@@ -7,6 +7,7 @@ namespace User_Service.Services
     {
         bool ValidateRegistration(UserRegisterDTO registerDTO);
         bool RegisterUser(UserRegisterDTO registerDTO, string uid);
+        bool DeleteUser(string uid);
     }
 
     public class UserService : IUserService
@@ -17,11 +18,23 @@ namespace User_Service.Services
         {
             _userContext = context;
         }
+        public bool DeleteUser(string uid)
+        {
+            var user = _userContext.Users.SingleOrDefault(u => u.UID == uid);
 
+            if (user == null)
+            {
+                return false;
+            }
+            _userContext.Users.Remove(user);
+            _userContext.SaveChanges();
+            return true;
+        }
         public bool RegisterUser(UserRegisterDTO registerDTO, string uid)
         {
             var newUser = new User
             {
+                UID = uid,
                 Name = registerDTO.Name,
                 Email = registerDTO.Email,
             };

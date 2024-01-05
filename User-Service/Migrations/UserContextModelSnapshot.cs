@@ -20,9 +20,8 @@ namespace User_Service.Migrations
 
             modelBuilder.Entity("User_Service.Models.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("UID")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -32,7 +31,7 @@ namespace User_Service.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("UID");
 
                     b.ToTable("Users");
                 });
