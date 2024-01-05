@@ -36,7 +36,8 @@
         "ASPNETCORE_URLS": "https://+:443;http://+:80",
         "GOOGLE_APPLICATION_CREDENTIALS": "./firebase.json",
         "GOOGLE_APIS_JWT": "./firebaseClient.json",
-        "DATABASE_CONNECTION": "./connection.json"
+        "DATABASE_CONNECTION": "./connection.json",
+        "MESSAGE_BUS": "./MessageBus.json"
       },
       "publishAllPorts": true,
       "useSSL": true

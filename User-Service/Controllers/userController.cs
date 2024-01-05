@@ -58,5 +58,23 @@ namespace User_Service.Controllers
 
         }
 
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteUser(string token)
+        {
+            try
+            {
+                // Extract the JWT token from the Authorization header
+                //var token = Request.Headers["Authorization"].ToString().Split(' ')[1];
+                var result = await _authentication.UnregisterAsync(token);
+
+                // Return a success message
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                // Return an error message
+                return BadRequest($"Error deleting user: {ex.Message}");
+            }
+        }
     }
 }
