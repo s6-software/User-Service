@@ -7,15 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 //cors
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalhost3000",
+    options.AddPolicy("AllowSpecific",
         builder =>
         {
-            builder.WithOrigins("http://localhost:3000")
+            builder.WithOrigins("http://localhost:3000", "https://www.note-manager.nl", "https://api.note-manager.nl")
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
 });
-
 
 //env
 var dbConfig = new ConfigurationBuilder()
